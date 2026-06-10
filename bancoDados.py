@@ -1,7 +1,7 @@
 import sqlite3
 import os
 
-caminho_bancodados = 'regstro.db'
+caminho_bancodados = 'ponto.db'
 
 
 def criar_banco():
@@ -15,9 +15,19 @@ def criar_banco():
     conexao.close()
 
 
-
-
-
-
-
-def pegar_todos_pontos():
+def pegar_todos_pontos(filtro=""):
+    conexao = sqlite3.connect(caminho_bancodados)
+    conexao.row_factory = sqlite3.Row
+    cursor = conexao.cursor()
+    if filtro:
+        cursor.execute(
+            "SELECT * FROM ponto WHERE _data LIKE ? ORDER BY _data",
+            (f"%{filtro}%",)
+        )
+    else:
+        cursor.execute("SELECT * FROM ponto ORDER BY _data")
+    pontos = []
+    for linha in cursor.fetchall():
+        pontos.append(dict(linha))
+    conexao.close()
+    return pontos
