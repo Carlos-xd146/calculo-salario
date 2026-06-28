@@ -15,19 +15,13 @@ def criar_banco():
     conexao.close()
 
 
-def pegar_todos_pontos(filtro=""):
+def pegar_todos_pontos():
     conexao = sqlite3.connect(caminho_bancodados)
     conexao.row_factory = sqlite3.Row
     cursor = conexao.cursor()
-    if filtro:
-        cursor.execute(
-            "SELECT * FROM ponto WHERE _data LIKE ? ORDER BY _data",
-            (f"%{filtro}%",)
-        )
-    else:
-        cursor.execute("SELECT * FROM ponto ORDER BY _data")
-    pontos = []
-    for linha in cursor.fetchall():
-        pontos.append(dict(linha))
+    cursor.execute("SELECT * FROM ponto ORDER BY _data")
+    dados = cursor.fetchall()
+
     conexao.close()
-    return pontos
+    return dados
+    
