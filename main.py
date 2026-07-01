@@ -4,6 +4,7 @@ from bancoDados import criar_banco, pegar_todos_pontos
 
 janela = tela_atual = None
 
+
 def tela_pontos():
     global tela_atual
     
@@ -32,9 +33,14 @@ def tela_pontos():
 
 
 
-    soma_total = ctk.CTkLabel(
+    ctk.CTkLabel(
         tela_atual,
-        text= f"Soma total = {calcular_total()} min",
+        text= f"Soma total = {calcular_total()} Hrs",
+        font=("Arial", 20),
+    ).pack(pady=12)
+    ctk.CTkLabel(
+        tela_atual,
+        text= f"Salário a pagar = R$ {calcular_total()*10}",
         font=("Arial", 20),
     ).pack(pady=12)
 
@@ -60,13 +66,16 @@ def tela_pontos():
 
 
 # def excluir_ponto():
+#     for hrs in pegar_todos_pontos():
+        
+   
    
 
 def calcular_total():
     horario = 0
 
     for horas in pegar_todos_pontos():
-        horario += (horas['horas'])*60
+        horario += (horas['horas'])
 
     return(horario)
 
